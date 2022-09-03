@@ -66,21 +66,20 @@ def hsv_s(pathNow,filename,img,s_deg):
     files = glob.glob(photos_dir + "/*")
 if __name__ == '__main__':
 for i, file in enumerate(files):
-    img = load_img(file)
     img_filename = os.path.split(file)[1]
     path, ext = os.path.splitext( os.path.basename(file) )
     # #元画像も保存
-    img2 = cv2.imread(file)
+    img = cv2.imread(file)
     c = string.ascii_lowercase + string.ascii_uppercase + string.digits
     rand_name = "".join([random.choice(c) for i in range(10)])
-    # cv2.imwrite(output_dir +"/org_" + rand_name+".png" , img2)
-    cv2.imwrite(output_dir +"/" + rand_name+".png" , img2)#オリジナル保存
+    img = cv2.resize(img, dsize=(image_size, image_size))
+    cv2.imwrite(output_dir +"/" + rand_name+".png" , img)#オリジナル保存
+    
 
-
-    ImgGamma(output_dir,img_filename,img2)
+    ImgGamma(output_dir,img_filename,img)
     h_deg = random.randint(30, 90)#色味1
-    hsv_h(output_dir,img_filename,img2,h_deg)
+    hsv_h(output_dir,img_filename,img,h_deg)
     h_deg = random.randint(90, 150)#色味2
-    hsv_h(output_dir,img_filename,img2,h_deg)
+    hsv_h(output_dir,img_filename,img,h_deg)
     s_deg = 0.5 #彩度
-    hsv_s(output_dir,img_filename,img2,s_deg)    
+    hsv_s(output_dir,img_filename,img,s_deg)    
